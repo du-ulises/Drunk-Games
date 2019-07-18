@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: eventos.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: eventos.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @description Modulos
+ */
+import {
+    Request
+} from './request.js';
+import {
+    Interfaz
+} from './interfaz.js';
+
+const request = new Request();
+const ui = new Interfaz();
+let currentPosition;
+let map;
+let marker;
+
+/**@class Clase eventos */
+export class Eventos {
+    constructor() {
+        this.cargarEventos();
+    }
+
+    iniclizarMapa() {
+        map = new google.maps.Map(document.getElementById('mapa'), {
+            zoom: 13,
+            center: {
+                lat: 19.7034699,
+                lng: -101.1847466
+            }
+        });
+
+        google.maps.event.addListener(map, 'click', function (event) {
+            currentPosition = event.latLng.toJSON();
+            addMarker(currentPosition, map);
+            $('#lat').val(currentPosition.lat);
+            $('#lng').val(currentPosition.lng);
+        });
+
+        function addMarker(location, map) {
+            if (marker != null) marker.setMap(null);
+
+            marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+        }
+    }
+
+    //Funcion encargada de mostrar los eventos ya registrados previamente
+    cargarEventos() {
+        request.get('/eventos')
+            .then(res => {
+                if (res.ok) {
+                    let eventos = res.data;
+
+                    eventos.forEach(evento => {
+                        var fecha = evento.fecha.replace(/-/gi, "/").split("T");
+                        let template = `
+                                &lt;div class="col s12 m6 l4">
+                                    &lt;div id=${evento.id} class="card">
+                                        &lt;div class="card-image waves-effect waves-block waves-light">
+                                            &lt;img class="activator" src="img/eventos/${evento.img}" style="height: 200px;">
+                                        &lt;/div>
+
+                                        &lt;div class="card-content">
+                                            &lt;span class="card-title activator grey-text text-darken-4">${evento.titulo}&lt;i class="material-icons right">more_vert&lt;/i>&lt;/span>
+                                            &lt;p>${evento.descripcion}&lt;/p>
+                                            &lt;p class="font-weight-5">Lugar: &lt;span>${evento.lugar}&lt;/span>&lt;/p>
+                                            &lt;p class="font-weight-3">Fecha: &lt;span>${fecha[0]}&lt;/span> &lt;/p>
+                                        &lt;/div>
+
+                                        &lt;div class="card-reveal">
+                                            &lt;span class="card-title grey-text text-darken-4">${evento.titulo}&lt;i class="material-icons right">close&lt;/i>&lt;/span>
+                                            
+                                            &lt;div class="row">
+                                                &lt;div class="col s12 margin-top-5">
+                                                    &lt;p class="font-weight-3">Fecha: &lt;span>${fecha[0]}&lt;/span> &lt;/p>
+                                                    &lt;p class="font-weight-3">Precio: &lt;span>$${evento.precio}&lt;/span>&lt;/p>
+                                                    &lt;p class="font-weight-3">Asistentes: &lt;span>${evento.numeroAsistentes}&lt;/span>&lt;/p>
+                                                    &lt;p class="font-weight-3">Participantes: &lt;span>${evento.numeroConcursantes}&lt;/span>&lt;/p>
+                                                    
+                                                    &lt;span class="lat">${evento.lat}&lt;/span>
+                                                    &lt;span class="lng">${evento.lng}&lt;/span>
+
+                                                    &lt;a href="#modal" class="waves-effect waves-light btn modal-trigger">
+                                                        &lt;i class="material-icons">place&lt;/i>
+                                                    &lt;/a>
+                                                &lt;/div>
+                                            &lt;/div>
+
+                                            &lt;div class="row">
+                                                &lt;div class="col s12">
+                                                    &lt;a class="waves-effect waves-light btn blue editar">
+                                                        &lt;i class="material-icons">edit&lt;/i>
+                                                    &lt;/a>
+                                                    &lt;a class="waves-effect waves-light btn red eliminar">
+                                                        &lt;i class="material-icons">delete&lt;/i>
+                                                    &lt;/a>
+                                                &lt;/div>
+                                            &lt;/div>
+                                        &lt;/div>
+                                        &lt;!--Fin de descripcion del evento-->
+                                    &lt;/div>
+                                &lt;/div>`;
+                        $('#principal').append(template);
+                    });
+
+                    this.iniclizarMapa();
+                } else {
+                    ui.mostrarAlert('Error al cargar los Eventos');
+                }
+            });
+    }
+
+    //Funcion para mostrar ubicacion en el mapa
+    mostrarUbicacion(lat, lng) {
+        lat = Number(lat);
+        lng = Number(lng);
+
+        map = new google.maps.Map(document.getElementById('mapa'), {
+            zoom: 17,
+            center: {
+                lat,
+                lng
+            }
+        });
+
+        if (marker != null) marker.setMap(null);
+
+        marker = new google.maps.Marker({
+            position: {
+                lat,
+                lng
+            },
+            map: map,
+        });
+    }
+
+    //Funcion para obtener los datos del formulario para crear nuevo evento
+    obtenerDatos(id) {
+        let titulo = $('#titulo').val();
+        let lugar = $('#lugar').val();
+        let fecha = $('#fecha').val();
+        let precio = $('#precio').val();
+        let descripcion = $('#descripcion').val();
+        let lat = $('#lat').val();
+        let lng = $('#lng').val();
+        let img = $('#img').val();
+
+        // Se convierte la fecha al formato aceptado de mysql aaaa-mm-dd
+        fecha = fecha.replace(",", " ").split(" ");
+
+        switch (fecha[0]) {
+            case "Jan":
+                fecha[0] = 1;
+                break;
+            case "Feb":
+                fecha[0] = 2;
+                break;
+            case "Mar":
+                fecha[0] = 3;
+                break;
+            case "Apr":
+                fecha[0] = 4;
+                break;
+            case "May":
+                fecha[0] = 5;
+                break;
+            case "Jun":
+                fecha[0] = 6;
+                break;
+            case "Jul":
+                fecha[0] = 7;
+                break;
+            case "Aug":
+                fecha[0] = 8;
+                break;
+            case "Sep":
+                fecha[0] = 9;
+                break;
+            case "Oct":
+                fecha[0] = 10;
+                break;
+            case "Nov":
+                fecha[0] = 11;
+                break;
+            case "Dec":
+                fecha[0] = 12;
+        }
+        fecha = fecha[3] + "-" + fecha[0] + "-" + fecha[1];
+        // FIN de se convierte la fecha al formato aceptado de mysql aaaa-mm-dd
+        if (id) {
+            if (titulo !== '' &amp;&amp; lugar !== '' &amp;&amp; fecha !== '' &amp;&amp; precio !== '' &amp;&amp; descripcion !== '' &amp;&amp; img !== '') {
+                $('#editar').removeAttr("disabled");
+                return {
+                    titulo,
+                    lugar,
+                    fecha,
+                    precio,
+                    descripcion,
+                    img,
+                    lat,
+                    lng,
+                    id
+                }
+            } else {
+                $('#editar').attr("disabled", true);
+                return false;
+            }
+        }
+
+        if (titulo !== '' &amp;&amp; lugar !== '' &amp;&amp; fecha !== '' &amp;&amp; precio !== '' &amp;&amp; descripcion !== '' &amp;&amp; img !== '') {
+            $('#guardar').removeAttr("disabled");
+            console.log('fecha: ' +fecha);
+            return {
+                titulo,
+                lugar,
+                fecha,
+                precio,
+                descripcion,
+                img,
+                lat,
+                lng
+            }
+        } else {
+            $('#guardar').attr("disabled", true);
+            return false;
+        }
+
+    }
+
+    //Funcion para crear un nuevo evento
+    crearEvento() {
+        let datos = this.obtenerDatos();
+
+        if (datos !== false) {
+            let formData = new FormData(document.getElementById('formulario'));
+            formData.set('fecha',datos.fecha);
+            request.postFile('/eventos', formData)
+                .then(res => {
+                    if (res.ok) {
+                        M.toast({
+                            html: 'Evento creado',
+                            classes: 'rounded'
+                        });
+                        this.limpiarEvento();
+                        setTimeout(() => {
+                            location.href = window.location.origin + '/view_eventos';
+                        }, 1000);
+                    } else if (!res.token) {
+                        location.href = window.location.origin;
+                    } else {
+                        ui.mostrarAlert('Error al crear evento', 'error');
+                    }
+                });
+        }
+    }
+
+
+    // Funcion para eliminar un evento en especifico
+    async eliminarEvento(id) {
+        // Obtiene la respuesta del alert, devuelve 'true' en caso de que den aceptar
+        let respuesta = await ui.mostrarAlert('Eliminar el Evento', 'warning');
+
+        if (respuesta) {
+            // Eliminamos el registro de la bd
+            request.delete('/eventos', id)
+                .then(res => {
+                    if (res.ok === true) {
+                        M.toast({
+                            html: 'Evento eliminado',
+                            classes: 'rounded'
+                        });
+                        $(`#${id}`).remove();
+                    } else {
+                        console.log(res.err);
+                        ui.mostrarAlert('Ocurrio un error al eliminar evento', 'error');
+                    }
+                });
+        }
+    }
+
+    //Funcion que limpia los campos unas vez que se creo un nuevo evento
+    limpiarEvento() {
+        $('#titulo').val('');
+        $('#lugar').val('');
+        $('#fecha').val('');
+        $('#precio').val('');
+        $('#descripcion').val('');
+        $('#img').val('');
+        $('#guardar').attr("disabled", true);
+
+        $('label').removeClass('active');
+        $('input.validate').removeClass('valid');
+        $('input.validate').removeClass('invalid');
+        $('input').addClass('validate');
+    }
+
+    //Funcion para actualizar la informacion de un evento en especifico
+    actualizarEvento(id) {
+
+        let datos = this.obtenerDatos(id);
+
+        request.put('/eventos', datos)
+            .then(res => {
+                if (res.ok) {
+                    M.toast({
+                        html: 'Evento actualizado',
+                        classes: 'rounded'
+                    });
+                } else {
+                    console.log(res.err);
+                    ui.mostrarAlert('Error al actualizar Administrador', 'error');
+                }
+            });
+    }
+  
+    //Funcion para colocar los datos del evento en los campos correspondientes cuando se va a editar
+    colocarDatos(id) {
+        request.getId('/edit_eventos', id)
+            .then(res => {
+                if (res.ok) {
+                    let evento = res.data;
+                    var fecha = evento[0].fecha.replace(/-/gi, "/").split("T");
+                    fecha = fecha[0].split("/");
+                    switch (fecha[1]) {
+                        case "1":
+                            fecha[1] = "Jan";
+                            break;
+                        case "2":
+                            fecha[1] = "Feb";
+                            break;
+                        case "3":
+                            fecha[1] = "Mar";
+                            break;
+                        case "4":
+                            fecha[1] = "Apr";
+                            break;
+                        case "5":
+                            fecha[1] = "May";
+                            break;
+                        case "6":
+                            fecha[1] = "Jun";
+                            break;
+                        case "7":
+                            fecha[1] = "Jul";
+                            break;
+                        case "8":
+                            fecha[1] = "Aug";
+                            break;
+                        case "9":
+                            fecha[1] = "Sep";
+                            break;
+                        case "10":
+                            fecha[1] = "Oct";
+                            break;
+                        case "11":
+                            fecha[1] = "Nov";
+                            break;
+                        case "12":
+                            fecha[1] = "Dec";
+                    }
+                    fecha = fecha[1] + " " + fecha[2] + ", " + fecha[0];
+                    $('#titulo').val(evento[0].titulo);
+                    $('#titulo').text(evento[0].titulo);
+                    $('#lugar').val(evento[0].lugar);
+                    $('#img').val(evento[0].img);
+                    $('#precio').val(evento[0].precio);
+                    $('#fecha').val(fecha);
+                    $('#descripcion').val(evento[0].descripcion);
+                    $('#lat').val(evento[0].lat);
+                    $('#lng').val(evento[0].lng);
+                } else {
+                    ui.mostrarAlert('Error al cargar el evento para editar');
+                }
+            });
+    }
+
+
+
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Eventos.html">Eventos</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Nov 14 2018 11:41:18 GMT-0600 (GMT-06:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
