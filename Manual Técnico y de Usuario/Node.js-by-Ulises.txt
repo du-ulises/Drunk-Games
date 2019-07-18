@@ -1,0 +1,11 @@
+Para version de node.js 10.12.0
+
+En consola:
+npm install node-gyp -g
+npm install bcrypt -g
+npm install bcrypt --save
+
+mysql -h localhost -u root -p
+CREATE DATABASE drunk;USE drunk;CREATE TABLE admins (    id INT PRIMARY KEY AUTO_INCREMENT,    usuario VARCHAR(45),    nombre VARCHAR(100),    pass VARCHAR(60),    estado TINYINT(1));CREATE TABLE users (    id INT PRIMARY KEY AUTO_INCREMENT,    usuario VARCHAR(45),    nombre VARCHAR(45),    paterno VARCHAR(45),    materno VARCHAR(45),    email VARCHAR(45) UNIQUE,    telefono INT(10),    pass VARCHAR(60),    calle VARCHAR(85),colonia VARCHAR(85),numero VARCHAR(10),codigoPostal INT(5),    fechaNac DATE,    estatura FLOAT(10,2),    peso FLOAT(10,2),    tipoSangre VARCHAR(15),    estado TINYINT(1));
+INSERT INTO admins(usuario,nombre, pass, estado) VALUES ("Admin", "administrador","$2a$04$ZAykAyohYVyl0J1S8cxTtuAj2RbwN5Dv/SIEW76EETfgBuEayUyCm",1);
+La contraseña es: qwaszx
