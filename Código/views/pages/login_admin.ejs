@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<!--Inicio, Se importan los css, libreria de materialicons y la metas necesarias para la pagina-->
+<head>
+    <meta charset="utf-8">
+    <title>DrunkGames</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<!--Fin, Se importan los css, libreria de materialicons y la metas necesarias para la pagina-->
+<body>
+
+<!--Inicio, Se crea el menu Nav que lleva la pagina de login-->
+  <nav class="indigo">
+    <div class="nav-wrapper">
+    </div>
+  </nav>
+<!--FIn, de Se crea el menu Nav que lleva la pagina de login-->
+
+<!--Inicio de Contenido de la pagina donde aparece el formulario para iniciar sesion-->
+    <main class="valign-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m6 offset-m3">
+                    <div class="card-panel">
+                        <div class="row">
+                            <div class="col s12">
+                                <!--Inicio de imagen del logo-->
+                                <div class="center">
+                                    <img src="img/logo.png" class="responsive-img">
+                                </div>
+                                <!--Fin de imagen del logo-->
+                                <div class="input-field">
+                                    <input id="usuario" type="text">
+                                    <label for="usuario">Usuario</label>
+                                </div>
+                                <div class="input-field">
+                                    <input id="password" type="password">
+                                    <label for="password">Password</label>
+                                </div>
+                                <div class="input-field">
+                                    <a id="btnLogin" class="waves-effect waves-light btn right indigo darken-2">login</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+<!--Fin de Contenido de la pagina donde aparece el formulario para iniciar sesion-->
+
+    <!-- Se importan los js que necesitan las paginas y las librerias-->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/materialize.min.js "></script>
+    <script src="js/sweetalert2.min.js"></script>
+    <script src="js/login_admin.js" type="module"></script>
+      
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: admins.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: admins.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @description Modulos
+ */
+import { Request } from './request.js';
+import { Interfaz } from './interfaz.js';
+
+const request = new Request();
+const ui = new Interfaz();
+
+/**@class Clase administradores */
+export class Admin {
+    constructor() {
+        this.cargarUsuarios();
+    }
+    /** 
+    * @description Funcion para mostrar los administradores ya registrados
+    */
+    cargarUsuarios() {
+        request.get('/admins')
+            .then(res => {
+                if (res.ok) {
+                    let usuarios = res.data;
+
+                    usuarios.forEach(usuario => {
+                        let tr = document.createElement('tr');
+                        tr.id = usuario.id;
+
+                        let template = `
+                            &lt;td>${usuario.usuario}&lt;/td>
+                            &lt;td>${usuario.nombre}&lt;/td>
+                            &lt;td class="center">
+                                &lt;a class="waves-effect waves-light btn blue mr-1 modal-trigger editar">
+                                    &lt;i class="material-icons">edit&lt;/i>
+                                &lt;/a>
+                                &lt;a class="waves-effect waves-light btn red eliminar">
+                                    &lt;i class="material-icons">delete&lt;/i>
+                                &lt;/a>
+                            &lt;/td>
+                        `;
+                        $(tr).append(template);
+                        $('#tablaAdmins tbody').append(tr);
+                    });
+                } else {
+                    ui.mostrarAlert('Error al cargar los Administradores');
+                }
+            });
+    }
+    /** 
+    * @description Funcion para que los administradores puedan cerrar su sesión
+    */
+    async CerrarSesion(){
+        localStorage.clear();
+        location.href = window.location.origin;
+    }
+    /**
+    * @description Funcion para obtener los datos del formulario para crear nuevo administrador
+    */
+    obtenerDatos() {
+        let usuario = $('#usuario').val();
+        let nombre = $('#nombre').val();
+        let pass = $('#password').val();
+        let repeatPassword = $('#repetir-password').val();
+
+        let matchPassword;
+        if (pass === repeatPassword &amp;&amp; pass !== '' &amp;&amp; repeatPassword !== '') {
+            matchPassword = true;
+
+            $('#repetir-password').removeClass('invalid');
+            $('#repetir-password').addClass('validate');
+            $('#repetir-password').addClass('valid');
+        } else {
+            matchPassword = false;
+
+            if (repeatPassword !== '') {
+                $('#repetir-password').removeClass('valid');
+                $('#repetir-password').removeClass('validate');
+                $('#repetir-password').addClass('invalid');
+
+            }
+        }
+
+        if (usuario !== '' &amp;&amp; nombre !== '' &amp;&amp; matchPassword) {
+            $('#guardar').removeAttr("disabled");
+            return {
+                usuario,
+                nombre,
+                pass
+            }
+        } else {
+            $('#guardar').attr("disabled", true);
+            return false;
+        }
+    }
+    /**
+    * @description Funcion encargada para crear un nuevo administrador
+    */
+    async crearUsuario() {
+        let datos = this.obtenerDatos();
+
+        if(datos !== false) {
+            request.post('/admins', datos)
+                .then(res => {
+                    if (res.ok) {
+                        let tr = document.createElement('tr');
+                        tr.id = res.id;
+    
+                        let template = `
+                                &lt;td>${datos.usuario}&lt;/td>
+                                &lt;td>${datos.nombre}&lt;/td>
+                                &lt;td class="center">
+                                    &lt;a class="waves-effect waves-light btn blue mr-1 modal-trigger editar">
+                                        &lt;i class="material-icons">edit&lt;/i>
+                                    &lt;/a>
+                                    &lt;a class="waves-effect waves-light btn red eliminar">
+                                        &lt;i class="material-icons">delete&lt;/i>
+                                    &lt;/a>
+                                &lt;/td>
+                            `;
+                        $(tr).append(template);
+                        $('#tablaAdmins tbody').append(tr);
+    
+                        M.toast({html: 'Administrador creado', classes: 'rounded'});
+                        
+                        $('#nuevoUsuario').hide().removeClass('visible').addClass('oculto');
+                        $('#btnNuevoUsuario i').text('add');
+                        this.limpiarUsuario();
+                    } else if (!res.token) {
+                        location.href = window.location.origin;
+                    } else {
+                        ui.mostrarAlert('Error al crear Administrador', 'error');
+                    }
+                });
+        }
+
+    }
+    /**
+    * @description Funcion encargada de eliminar un administrador
+    */
+    async eliminarUsuario(id) {
+        // Obtiene la respuesta del alert, devuelve 'true' en caso de que den aceptar
+        let respuesta = await ui.mostrarAlert('Eliminar el Administrador', 'warning');
+
+        if (respuesta) {
+            // Eliminamos el registro de la bd
+            request.delete('/admins', id)
+                .then(res => {
+                    if (res.ok) {
+                        $(`#tablaAdmins tbody tr#${id}`).remove();
+                        M.toast({html: 'Administrador eliminado', classes: 'rounded'});
+                    } else {
+                        console.log(res.err);
+                        ui.mostrarAlert('Ocurrio un error', 'error');
+                    }
+                });
+        }
+    }
+    /**
+    * @description Funcion que limpia los campos unas vez que se creo un nuevo administrador
+    */
+    limpiarUsuario() {
+        $('#usuario').val('');
+        $('#nombre').val('');
+        $('#password').val('');
+        $('#repetir-password').val('');
+
+        $('label').removeClass('active');
+        $('input.validate').removeClass('valid');
+        $('input.validate').removeClass('invalid');
+        $('input').addClass('validate');
+    }
+    /**
+    * @description Funcion para colocar los datos del administrador en los campos correspondientes cuando se va a editar
+    */
+    colocarDatos(id) {
+        let tr = $(`#tablaAdmins tbody tr#${id}`);
+
+        let datos = "";
+        $(tr).find("td").each(function(index) {
+            if (index &lt; 3) {
+                datos += $(this).html().trim();
+                if (index &lt; 2) datos += '*-';
+            }
+        });
+        datos = datos.split('*-');
+
+        $('#usuario').val(datos[0]);
+        $('#nombre').val(datos[1]);
+
+        $('label').addClass('active');
+    }
+    /**
+    * @description Funcion encargada de actualizar a un administrador
+    */
+    actualizarUsuario() {
+        let datos = this.obtenerDatos();
+        let tr = $('#tablaAdmins tbody tr.active');
+        datos.id = tr.prop("id");
+
+        request.put('/admins', datos)
+            .then(res => {
+                if (res.ok) {
+                    tr.text('');
+                    let template = `
+                            &lt;td>${datos.usuario}&lt;/td>
+                            &lt;td>${datos.nombre}&lt;/td>
+                            &lt;td class="center">
+                                &lt;a class="waves-effect waves-light btn blue mr-1 modal-trigger editar">
+                                    &lt;i class="material-icons">edit&lt;/i>
+                                &lt;/a>
+                                &lt;a class="waves-effect waves-light btn red eliminar">
+                                    &lt;i class="material-icons">delete&lt;/i>
+                                &lt;/a>
+                            &lt;/td>
+                        `;
+                    $(tr).append(template);
+
+                    M.toast({html: 'Administrador actualizado', classes: 'rounded'});
+
+                    $('#nuevoUsuario').hide().removeClass('visible').addClass('oculto');
+                    $('#btnNuevoUsuario i').text('add');
+                    this.limpiarUsuario();
+                } else {
+                    console.log(res.err);
+                    ui.mostrarAlert('Error al actualizar Administrador', 'error');
+                }
+            });
+    }
+
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Admin.html">Admin</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Nov 14 2018 11:32:24 GMT-0600 (GMT-06:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

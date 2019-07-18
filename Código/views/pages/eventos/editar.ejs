@@ -1,0 +1,81 @@
+<!-- Se importa el head.ejs que es la parte superior de la pagina-->
+<% include ../../partials/head.ejs %>
+<!-- Inicio de contenido de la pagina-->
+<main>
+    <div class="container margin-top-2">
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="card-panel">
+                            <div class="row">
+                                <div class="col s12 m6 l6">
+                                        <h4 class="margin-top-0">Editar evento</h4>
+                                    </div>
+                                <div class="col s12 mt-1">
+                                    <div class="row">
+                                        <!-- Inicio de Formulario para nuevo evento-->
+                                        <form id="formulario" class="col s12" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="input-field col s12 m3 l3">
+                                                    <input placeholder="" name="titulo" id="titulo" type="text" class="validate">
+                                                    <label for="titulo">Titulo</label>
+                                                </div>
+                                                <div class="input-field col s12 m3 l3">
+                                                    <input placeholder="" name="lugar" id="lugar" type="text" class="validate">
+                                                    <label for="lugar">Lugar del evento</label>
+                                                    </div>
+                                                <div class="input-field col s12 m3 l3">
+                                                    <input placeholder="" name="fecha" id="fecha" type="text" class="datepicker">
+                                                    <label for="fecha">Fecha del evento</label>
+                                                </div>
+                                                <div class="input-field col s12 m3 l3">
+                                                    <input placeholder="" name="precio" id="precio" type="number" min="0" class="validate">
+                                                    <label for="precio">Precio</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12 m6">
+                                                    <textarea placeholder="" name="descripcion" id="descripcion" class="materialize-textarea"></textarea>
+                                                    <label for="descripcion">Descripcion del evento</label>
+                                                </div>
+                                                <div class="col s12 m6">
+                                                    <div class="file-field input-field">
+                                                        <div class="btn pink">
+                                                            <span>Imagen</span>
+                                                            <input placeholder="" name="imagen" type="file" id="img-file" accept="image/*">
+                                                        </div>
+                                                        <div class="file-path-wrapper">
+                                                            <input id="img" class="file-path validate" type="text" accept="image/*">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col s12">
+                                                    <div id="mapa"></div>
+                                                    <input placeholder="" name="lat" id="lat" type="text">
+                                                    <input placeholder="" name="lng" id="lng"  type="text">
+                                                </div>
+                                            </div>
+                                             <!--<input id="editar" class="waves-effect waves-light btn right green" type="submit" value="Editar">-->
+                                             <div class="col s12">
+                                                <div class="input-field">
+                                                    <a id="editar" class="waves-effect waves-light btn right green" disabled>Editar</a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- Fin de Formulario para nuevo evento-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Fin de contenido de la pagina-->
+
+
+<!-- Se importa el footer.ejs que es la parte final de la pagina-->
+<% include ../../partials/footer.ejs %>

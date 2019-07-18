@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link rel="stylesheet" href="css/estilos.css">
+    <title>Success</title>
+</head>
+<body>
+    <div class="success-hero">
+        <div class="filtro">
+            <div class="info-success">
+                <h5 class="center white-text">Su pago fue registrado</h5>
+                <span hidden id="transaccion"><%= transaccion %></span>
+                
+                <div id="contenedor-qr"></div>
+
+                <p class="center white-text">Puede consultar sus eventos y codigos QR en su perfil.</p>
+                <p class="center white-text">Muestre este codigo QR al entrar al evento.</p>
+
+                <a href="/" id="regresar-inicio" class="btn">Regresar a inicio</a>
+
+                <!-- Se tiene que reemplazar la url para la del servidor en donde este corriendo la aplicacion. Por ejemplo drunkgames.com/mievento -->
+                <div class="fb-share-button center" style="margin-top:20px;" data-href="https://www.youtube.com/watch?v=QoitiIbdeaM&amp;start_radio=1&amp;list=RDQoitiIbdeaM" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DQoitiIbdeaM%26start_radio%3D1%26list%3DRDQoitiIbdeaM&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/qrcode.min.js"></script>
+    <script src="js/success.js" type="module"></script>
+
+</body>
+</html>

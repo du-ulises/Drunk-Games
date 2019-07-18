@@ -1,0 +1,136 @@
+<!-- Se importa el headindex.ejs que es la parte superior de la pagina para usuarios normales-->
+<% include ../../partials/headindex.ejs %>
+<!-- Inicio de contenido de la pagina donde el usuario puede editar su informacion de perfil-->
+<main>
+    <div class="container margin-top-2">
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="card-panel">
+                            <div class="row">
+                                <div class="col s12 m6 l6">
+                                        <h4 class="margin-top-0">Editar Perfil</h4>
+                                    </div>
+                                <div class="col s12 mt-1">
+                                    <div class="row">
+                                        <!-- Inicio de Formulario para editar perfil de usuario-->
+                                        <form class="col s12">
+                                            <div class="row">
+                                                <div class="input-field col s12 m4 l4">
+                                                    <input placeholder="" id="nombre" type="text" class="validate">
+                                                    <label for="nombre">Nombre</label>
+                                                    </div>
+                                                <div class="input-field col s12 m4 l4">
+                                                    <input placeholder="" id="appaterno" type="text" class="validate">
+                                                    <label for="appaterno">Apellido materno</label>
+                                                </div>
+                                                <div class="input-field col s12 m4 l4">
+                                                    <input placeholder="" id="apmaterno" type="text" class="validate">
+                                                    <label for="apmaterno">Apellido Paterno</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12 m4 l4">
+                                                    <i class="material-icons prefix">account_circle</i>
+                                                    <input placeholder="" id="nombreUsuario" type="text" class="validate">
+                                                    <label for="nombreUsuario">Nombre de usuario</label>
+                                                </div>
+                                                <div class="input-field col s12 m4 l4">
+                                                    <i class="material-icons prefix">email</i>
+                                                    <input placeholder="" id="email" type="email" class="validate">
+                                                    <label for="email">Email</label>
+                                                </div>
+                                                <div class="input-field col s12 m4 l4">
+                                                    <i class="material-icons prefix">cake</i>
+                                                    <input placeholder="" id="fechnac" type="text" class="datepicker">
+                                                    <label for="fechnac">Fecha de nacimiento</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12 m6 l6">
+                                                    <i class="material-icons prefix">lock</i>
+                                                    <input placeholder="" id="pass" type="password" class="validate">
+                                                    <label for="pass">Password</label>
+                                                </div>
+                                                <div class="input-field col s12 m6 l6">
+                                                    <input placeholder="" id="rpass" type="password" min="0" class="validate">
+                                                    <label for="rpass">Repetir password</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12 m6 l6">
+                                                    <i class="material-icons prefix">location_on</i>
+                                                    <input placeholder="" id="calle" type="text" class="validate">
+                                                    <label for="calle">Calle</label>
+                                                </div>
+                                                <div class="input-field col s12 m6 l6">
+                                                    <input placeholder="" id="colonia" type="text" class="validate">
+                                                    <label for="colonia">Colonia</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12 m4 l4">
+                                                    <input placeholder="" id="numero" type="number" class="validate">
+                                                    <label for="numero">Numero</label>
+                                                </div>
+                                                <div class="input-field col s12 m4 l4">
+                                                    <input placeholder="" id="postal" type="number" min="0" class="validate">
+                                                    <label for="postal">Codigo postal</label>
+                                                </div>
+                                                <div class="input-field col s12 m4 l4">
+                                                        <i class="material-icons prefix">phone</i>
+                                                        <input placeholder="" id="tel" type="text" class="validate">
+                                                        <label for="tel">Telephone</label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="input-field col s12 m4 l4">
+                                                    <i class="material-icons prefix">arrow_upward</i>
+                                                    <input placeholder="" id="estatura" type="number" step=".01" class="validate">
+                                                    <label for="estatura">Estatura(metros)</label>
+                                                </div>
+                                                <div class="input-field col s12 m4 l4">
+                                                    <i class="material-icons prefix">arrow_downward</i>
+                                                    <input placeholder="" id="peso" type="number" step=".01" class="validate">
+                                                    <label for="peso">Peso(kilogramos)</label>
+                                                </div>
+                                                <div class="input-field col s12 m4 l4">
+                                                    <i class="material-icons prefix">opacity</i>
+                                                    <input placeholder="" id="tiposangre" type="text" min="0" class="validate">
+                                                    <label for="tiposangre">Tipo de sangre</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12 m12 l12">
+                                                    <p>
+                                                        <label>
+                                                            <input id="terminos" type="checkbox" />
+                                                            <span>Acepto los <a href="/">terminos y condiciones de este servicio y las politicas de privacidad</a></span>
+                                                        </label>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col s12">
+                                                <div class="input-field">
+                                                    <a id="editar" class="waves-effect waves-light btn right green" disabled>Editar</a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- Fin de Formulario para editar perfil de usuario-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Fin de contenido de la pagina-->
+
+
+<!-- Se importa el footer.ejs que es la parte final de la pagina-->
+<% include ../../partials/footer.ejs %>

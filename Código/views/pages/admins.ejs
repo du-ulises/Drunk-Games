@@ -1,0 +1,96 @@
+<!-- Se importa el head.ejs que es la parte superior de la pagina-->
+<% include ../partials/head.ejs %>
+
+<!--Contenido de la pagina donde aparecen los administradores ya registrados-->
+    <main>
+        <div class="container margin-top-2">
+            <div class="row">
+                <div class="col s12">
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="card-panel">
+                                <div class="row">
+                                    <!--Inicio panel para crear o editar administradores-->
+                                    <div class="col s12 m6 l6">
+                                        <h4 class="margin-top-0">Administradores</h4>
+                                    </div>
+                                    <div class="col s12 m6 l6">
+                                        <a id="btnNuevoUsuario" class="waves-effect waves-light btn pink right">
+                                            <i class="material-icons">add</i>
+                                        </a>
+                                    </div>
+                                    <div class="col s12 mt-1">
+                                        <div id="nuevoUsuario" class="oculto" hidden>
+                                            <div class="row">
+                                                <div class="col s12 l3">
+                                                    <div class="input-field">
+                                                        <input id="usuario" type="text" class="validate">
+                                                        <label for="usuario">Nombre de usuario</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col s12 l3">
+                                                    <div class="input-field">
+                                                        <input id="nombre" type="text" class="validate">
+                                                        <label for="nombre">Nombre completo</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col s12 l3">
+                                                    <div class="input-field">
+                                                        <input id="password" type="password" class="validate">
+                                                        <label for="password">Password</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col s12 l3">
+                                                    <div class="input-field">
+                                                        <input id="repetir-password" type="password" class="validate">
+                                                        <label for="repetir-password">Repita password</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col s12">
+                                                    <div class="input-field">
+                                                        <a id="guardar" class="waves-effect waves-light btn right green" disabled>Agregar</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <!--Fin panel para crear o editar administradores-->
+
+                                    <!--Inicio panel para mostrar administradores-->
+                                    <div class="col s12">
+                                        <table id="tablaAdmins" class="highlight responsive-table tabla">
+                                            <thead>
+                                                <tr>
+                                                    <th>Usuario</th>
+                                                    <th>Nombre</th>
+                                                    <th class="center">Funciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--Fin panel para mostrar administradores-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--Fin de contenido de la pagina-->
+
+    <!--script que acomoda el boton add cuando la pantalla es menor o igual a 600px-->
+    <script>
+        var btn = document.getElementById('btnNuevoUsuario');
+        var mediaquery = window.matchMedia("(max-width: 600px)");
+        if (mediaquery.matches) {
+            btn.classList.remove('right');
+        }
+    </script>
+
+    <!-- Se importa el footer.ejs que es la parte final de la pagina-->
+    <% include ../partials/footer.ejs %>

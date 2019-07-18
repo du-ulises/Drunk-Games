@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<!--Se importan los css, libreria de materialicons y la metas necesarias para la pagina-->
+<head>
+    <meta charset="utf-8">
+    <title>DrunkGames</title>
+
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
+    <link rel="stylesheet" href="css/estilos.css">
+
+</head>
+
+<body>
+ 
+    <header>
+        <!-- Se crea el menu Nav que llevan las paginas-->
+    <nav class="indigo darken-2">
+        <div class="nav-wrapper container">
+            <a href="#!" class="brand-logo">
+                <img id="logo" src="img/logo.png" height="63" class="margin-2">
+            </a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/view_eventos">Eventos</a></li>
+                <li><a href="/view_admins">Adminstradores</a></li>
+                <li><a id="logout" href="/login_admins">Cerrar sesión</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Se crea el menu Nav que llevan las paginas pero para celular-->
+    <ul class="sidenav" id="mobile-demo">
+            <li><a href="/view_eventos">Eventos</a></li>
+            <li><a href="/view_admins">Adminstradores</a></li>
+            <li><a id="logout2" href="/login_admins">Cerrar sesión</a></li>
+    </ul>
+    </header>

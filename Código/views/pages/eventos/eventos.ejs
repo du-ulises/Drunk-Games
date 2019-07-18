@@ -1,0 +1,42 @@
+<!-- Se importa el head.ejs que es la parte superior de la pagina-->
+<% include ../../partials/head.ejs %>
+
+<!--Contenido de la pagina donde aparecen los eventos ya registrados-->
+    <main>
+        <div class="container margin-top-2">
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    <h4 class="margin-top-0 font-weight-3">Eventos</h4>
+                </div>
+                <!--Inicio Boton para crear un nuevo evento-->
+                <div class="fixed-action-btn">
+                    <a href="/new_eventos" class="btn-floating btn-large red">
+                        <i class="large material-icons">add</i>
+                    </a>
+                </div>
+                <!--Fin Boton para crear un nuevo evento-->
+                <div id="principal" class="row">
+                        
+                </div>
+            </div>
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <div id="mapa"></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    
+    <!--script que acomoda el boton add cuando la pantalla es menor o igual a 600px-->
+    <script>
+        var btn = document.getElementById('btnNuevoEvento');
+        var mediaquery = window.matchMedia("(max-width: 600px)");
+        if (mediaquery.matches) {
+            btn.classList.remove('right');
+        }
+     </script>
+     <!--FIn de script que acomoda el boton add cuando la pantalla es menor o igual a 600px-->
+
+<!-- Se importa el footer.ejs que es la parte final de la pagina-->
+<% include ../../partials/footer.ejs %>

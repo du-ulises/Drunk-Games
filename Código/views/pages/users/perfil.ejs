@@ -1,0 +1,151 @@
+<!-- Se importa el headindex.ejs que es la parte superior de la pagina para usuarios normales-->
+<% include ../../partials/headindex.ejs %>
+<!--Contenido de la pagina donde aparece la informacion del perfil del usuario que ha iniciado sesión-->
+    <main>
+        <div class="container margin-top-2">
+                <div id="">
+                    <div  id="img-perfil" class="card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator" src="img/user.jpg">
+                        </div>
+                        <div class="card-content">
+                            <div id="1" class="row">
+                                <div  class="col s12 m12 l12 right">
+                                    <a  id="eliminar" class="btn-floating waves-effect waves-light btn red eliminar">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                    <a href="/editar_user" class="btn-floating waves-effect waves-light btn blue mr-1 modal-trigger editar">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m3 l3">
+                                    <h4 id="nombre" class="card-title grey-text text-darken-4"></h4>
+                                    <p id="usuario"class="medium-small grey-text"></p>
+                                </div>
+                                <div class="col s12 m3 l3 center-align">
+                                    <h4 id="tipoSangre" class="card-title grey-text text-darken-4"></h4>
+                                    <p class="medium-small grey-text">Tipo de sangre</p>
+                                </div>
+                                <div class="col s12 m3 l3 center-align">
+                                    <h4 id="peso" class="card-title grey-text text-darken-4"></h4>
+                                    <p class="medium-small grey-text">Peso</p>
+                                </div>
+                                <div class="col s12 m3 l3 center-align">
+                                    <h4 id="estatura" class="card-title grey-text text-darken-4"></h4>
+                                    <p class="medium-small grey-text">Estatura</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="card-reveal">
+                            <p >
+                            <span id="nombrereveal" class="card-title grey-text text-darken-4">
+                                <i class="material-icons right">close</i>
+                            </span>
+                            </p>
+                            <span id="usuarioreveal">
+                            <i class="material-icons cyan-text text-darken-2">perm_identity</i> </span>
+                            <p id="tel">
+                                <i class="material-icons cyan-text text-darken-2">perm_phone_msg</i></p>
+                            <p id="email">
+                                <i class="material-icons cyan-text text-darken-2">email</i></p>
+                            <p id="cumple">
+                                <i class="material-icons cyan-text text-darken-2">cake</i></p>
+                            <p id="direccion">
+                                <i class="material-icons cyan-text text-darken-2">airplanemode_active</i></p>
+                        </div>
+                    </div>
+                </div>
+                <div id="eventos" class="row">  
+                    <h4>Mis eventos</h4>              
+                </div>
+                <div id="modal" class="modal">
+                        <div class="modal-content">
+                            <div id="mapa"></div>
+                        </div>
+                </div>
+                <div id="modal1" class="modal">
+                        <div class="modal-content">
+                        
+                            <div id="qr1" class="contenedor-qr1"></div>
+                        </div>
+
+                        <!--<div class="success-hero">
+                                <div class="filtro">
+                                    <div class="info-success">
+                                        <div id="contenedor-qr"></div>
+                                      </div>
+                                </div>
+                            </div>-->
+                </div>
+                <div id="modal2" class="modal">
+                        <div class="modal-content">
+                            <div id="qr2"class="contenedor-qr1">   </div>
+                        </div>
+                </div>
+                <div id="modal3" class="modal">
+                        <div class="modal-content">
+                            <div id="qr3"class="contenedor-qr1">   </div>
+                        </div>
+                </div>
+                <div id="modal4" class="modal">
+                        <div class="modal-content">
+                            <div id="qr4"class="contenedor-qr1">   </div>
+                        </div>
+                </div>
+                <div id="modal5" class="modal">
+                        <div class="modal-content">
+                            <div id="qr5"class="contenedor-qr1">   </div>
+                        </div>
+                </div>
+                <div id="modal6" class="modal">
+                        <div class="modal-content">
+                            <div id="qr6"class="contenedor-qr1">   </div>
+                        </div>
+                </div>
+                <div id="modal7" class="modal">
+                        <div class="modal-content">
+                            <div id="qr7"class="contenedor-qr1">   </div>
+                        </div>
+                </div>
+                <div id="modal8" class="modal">
+                        <div class="modal-content">
+                            <div id="qr8"class="contenedor-qr1">   </div>
+                        </div>
+                </div>
+                <div id="modal9" class="modal">
+                        <div class="modal-content">
+                            <div id="qr9"class="contenedor-qr1">   </div>
+                        </div>
+                </div>
+                <div id="modal10" class="modal">
+                        <div class="modal-content">
+                            <div id="qr10" class="contenedor-qr1"   ></div>
+                        </div>
+                </div>
+                <div id="modal11" class="modal">
+                        <div class="modal-content">
+                            <div id="qr11" class="contenedor-qr1"   ></div>
+                        </div>
+                </div>
+                <div id="modal12" class="modal">
+                        <div class="modal-content">
+                            <div id="qr12" class="contenedor-qr1"   ></div>
+                        </div>
+                </div>
+                <div id="modal13" class="modal">
+                        <div class="modal-content">
+                            <div id="qr13" class="contenedor-qr1"   ></div>
+                        </div>
+                </div>
+
+            </div>
+    </main>
+    <script>
+    
+    </script>
+    <!--Fin De Contenido de la pagina donde aparece la informacion del perfil del usuario que ha iniciado sesión-->
+<!-- Se importa el footer.ejs que es la parte final de la pagina-->
+<% include ../../partials/footer.ejs %>
